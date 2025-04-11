@@ -130,9 +130,10 @@ def uploaded_file(filename):
 def response_file(filename):
     return send_from_directory(RESPONSE_FOLDER, filename)
 
-@app.route('/book/<filename>')
+@app.route('/books/<filename>')
 def uploaded_book(filename):
-    return send_from_directory(BOOK_FOLDER, filename.split(".")[0]+".pdf")
+    path = os.path.join(BOOK_FOLDER, filename.split(".")[0]+".pdf")
+    return send_file(path)
 
 if __name__ == '__main__':
     app.run(debug=True)
