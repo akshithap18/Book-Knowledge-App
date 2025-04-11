@@ -71,6 +71,7 @@
         <ul>
           {% for file in files %}
           <li>
+             <a href="{{ url_for('uploaded_book', filename=file) }}" style="margin-right: 20px;">Book</a>
             <div class="audio-container">
               <audio controls>
                 <source src="{{ url_for('uploaded_file', filename=file) }}">

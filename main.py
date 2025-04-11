@@ -85,7 +85,8 @@ def index():
 @app.route('/upload_audio', methods=['POST'])
 def upload_audio():
     logging.info(f"Start api")
-    pdf_filename = datetime.now().strftime("%Y%m%d-%I%M%S%p") + '.pdf'
+    time_stamp = datetime.now().strftime("%Y%m%d-%I%M%S%p")
+    pdf_filename = time_stamp + '.pdf'
     pdf_file_path = os.path.join(BOOK_FOLDER, pdf_filename)
     request.files['pdf_data'].save(pdf_file_path)
 
@@ -94,7 +95,7 @@ def upload_audio():
 
     logging.info(f"pdf save")
 
-    audio_filename = datetime.now().strftime("%Y%m%d-%I%M%S%p") + '.wav'
+    audio_filename = time_stamp + '.wav'
     audio_file_path = os.path.join(UPLOAD_FOLDER, audio_filename)
     request.files['audio_data'].save(audio_file_path)
 
@@ -112,6 +113,10 @@ def upload_audio():
 def get_file(filename):
     return send_file(filename)
 
+@app.route('/book/<filename>')
+def get_book(filename):
+    return send_file(filename)
+
 
 @app.route('/script.js',methods=['GET'])
 def scripts_js():
@@ -124,6 +129,10 @@ def uploaded_file(filename):
 @app.route('/response/<filename>')
 def response_file(filename):
     return send_from_directory(RESPONSE_FOLDER, filename)
+
+@app.route('/book/<filename>')
+def uploaded_book(filename):
+    return send_from_directory(BOOK_FOLDER, filename.split(".")[0]+".pdf")
 
 if __name__ == '__main__':
     app.run(debug=True)
