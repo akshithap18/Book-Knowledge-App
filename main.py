@@ -24,7 +24,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESPONSE_FOLDER, exist_ok=True)
 os.makedirs(BOOK_FOLDER, exist_ok=True)
 
-project_id = "conversational-ai-448717"
+#project_id = "conversational-ai-448717"
 
 client_texttospeech=texttospeech_v1.TextToSpeechClient()
 
@@ -33,7 +33,8 @@ Analyse the upload pdf book.
 Answer to audio question.
 """
 
-vertexai.init(project=project_id, location="us-central1")
+#vertexai.init(project=project_id, location="us-central1")
+vertexai.init()
 model = GenerativeModel("gemini-1.5-flash-001")
 voice = texttospeech_v1.VoiceSelectionParams(language_code = "en-US",ssml_gender = "FEMALE")
 audio_config = texttospeech_v1.AudioConfig(audio_encoding = "LINEAR16",speaking_rate=0.9)
