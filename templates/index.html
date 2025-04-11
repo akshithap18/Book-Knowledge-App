@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Knowledge App</title>
+  <style>
+    /* (CSS remains unchanged – styling omitted here for brevity) */
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+      display: none;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    body { font-family: Arial, sans-serif; background-color: #f7f7f7; margin: 0; padding: 0; }
+    h2, h3 { text-align: center; color: #333; margin-top: 20px; }
+    ul { list-style-type: none; padding: 0; margin: 20px; }
+    li { background-color: #fff; margin-bottom: 20px; padding: 20px; border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    .audio-container { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    audio { width: 40%; border-radius: 8px; border: 1px solid #ddd; padding: 5px; background-color: #f9f9f9; }
+    audio:hover { background-color: #e6e6e6; }
+    #submitButton, #record, #stop {
+      padding: 10px 20px; color: white; border: none; border-radius: 8px; cursor: pointer;
+      margin: 10px; width: 120px; display: inline-block;
+    }
+    #submitButton { background-color: #007bff; width: 200px; margin: 20px auto; display: block; }
+    #submitButton:hover { background-color: #0056b3; }
+    #record { background-color: #4CAF50; }
+    #stop { background-color: #f44336; }
+    #record:hover { background-color: #45a049; }
+    #stop:hover { background-color: #e53935; }
+    .button-container { text-align: center; margin-top: 30px; }
+    #timer { display: block; text-align: center; margin-top: 10px; }
+    input[type="file"] {
+      display: block;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+<body>
+  <table style="width:100%">
+    <tr>
+      <td style="width:50%">
+        <h2>Book Knowledge App</h2>
+
+        <h3>Upload Your Book</h3>
+
+        <input type="file" id="pdfInput" accept="application/pdf" />
+
+        <h3>Record Your Question</h3>
+
+        <div class="button-container">
+          <button id="record">Record</button>
+          <button id="stop">Stop</button>
+          <span id="timer">00:00</span>
+        </div>
+
+        <button id="submitButton">Submit</button>
+
+        <div id="spinner" class="spinner"></div>
+
+        <script src="script.js"></script>
+
+        <h2>Questions and Answers</h2>
+        <ul>
+          {% for file in files %}
+          <li>
+            <div class="audio-container">
+              <audio controls>
+                <source src="{{ url_for('uploaded_file', filename=file) }}">
+                Your browser does not support the audio element.
+              </audio>
+              <audio controls>
+                <source src="{{ url_for('response_file', filename=file) }}">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
